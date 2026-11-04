@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprendamos Salud San Lucas Tolimán</title>
+  
+  <!-- PWA & Meta Tags -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="description" content="Plataforma de salud preventiva, botiquín del hogar, triaje y directorio médico de San Lucas Tolimán, Sololá.">
+  <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+  <link rel="icon" type="image/x-icon" href="/static/icons/favicon.ico">
+  
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <!-- FontAwesome 6.5.2 CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
+  
+  <!-- Apple Minimalist Styles -->
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- Offline Status Banner -->
+  <div id="offline-banner" class="offline-banner">
+    <i class="fa-solid fa-wifi-slash me-2"></i> Modo sin conexión. Navegando con datos locales de San Lucas Tolimán.
+  </div>
+
+  <!-- Apple Translucent Header (Single Navigation - No Duplicates) -->
+  <nav class="navbar navbar-expand-lg apple-navbar py-2">
+    <div class="container px-3 px-lg-4">
+      <a class="brand-wrapper" data-view="view-inicio">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+        <div>
+          <div class="brand-title">Aprendamos Salud</div>
+          <div class="brand-subtitle">San Lucas Tolimán</div>
+        </div>
+      </a>
+
+      <!-- Desktop Apple Segmented Control Navigation -->
+      <div class="d-none d-lg-block mx-auto">
+        <div class="apple-segmented-nav">
+          <a class="nav-link-apple active" data-view="view-inicio">
+            <i class="fa-solid fa-house"></i> Inicio
+          </a>
+          <a class="nav-link-apple" data-view="view-botiquin">
+            <i class="fa-solid fa-kit-medical"></i> Botiquín
+          </a>
+          <a class="nav-link-apple" data-view="view-preconsulta">
+            <i class="fa-solid fa-clipboard-user"></i> Pre-Consulta
+          </a>
+          <a class="nav-link-apple" data-view="view-directorio">
+            <i class="fa-solid fa-hospital"></i> Hospitales y Clínicas
+          </a>
+          <a class="nav-link-apple" data-view="view-educacion">
+            <i class="fa-solid fa-book-medical"></i> Educación
+          </a>
+          <a class="nav-link-apple" data-view="view-donaciones">
+            <i class="fa-solid fa-hand-holding-dollar"></i> Donaciones
+          </a>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-apple-secondary" id="btn-panel-medico" style="font-size: 0.82rem;">
+          <i class="fa-solid fa-user-doctor me-1"></i> Médico
+          <span class="badge bg-danger rounded-pill ms-1" id="doctor-pending-count">0</span>
+        </button>
+
+        <button class="btn btn-sm btn-apple d-none" id="btn-instalar-app" style="font-size: 0.82rem;">
+          <i class="fa-solid fa-download me-1"></i> Instalar
+        </button>
+
+        <span id="offline-badge" class="badge bg-secondary rounded-pill d-none small">
+          <i class="fa-solid fa-cloud-arrow-down"></i> Offline
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Views Container -->
+  <main class="container px-3 px-lg-4 mt-4">
+
+    <!-- =======================================================================
+         VISTA 0: INICIO (APPLE MINIMALIST HUB)
+         ======================================================================= -->
+    <div id="view-inicio" class="app-view active-view">
+      <div class="view-header-apple">
+        <span class="apple-tag">
+          <i class="fa-solid fa-shield-virus"></i> Salud Comunitaria
+        </span>
+        <h1 class="apple-title">Atención Oportuna y Prevención Familiar</h1>
+        <p class="apple-subtitle">
+          Plataforma médica para los habitantes de San Lucas Tolimán, Sololá. Seleccione directamente el servicio que necesita:
+        </p>
+      </div>
+
+      <!-- Clean Hub Grid -->
+      <div class="row g-3 mb-4">
+        <!-- Hub 1: Botiquín -->
+        <div class="col-lg-4 col-md-6">
+          <div class="apple-hub-card" data-view="view-botiquin">
+            <div class="apple-hub-icon" style="background: rgba(52, 199, 89, 0.12); color: #34C759;">
+              <i class="fa-solid fa-kit-medical"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Botiquín en Casa "Por Si Acaso"</h5>
+            <p class="small text-secondary mb-3">
+              Medicamentos e insumos básicos que debe tener listos para emergencias nocturnas o repentinas en el hogar.
+            </p>
+            <div class="apple-link-action">
+              Ver botiquín y medicamentos <i class="fa-solid fa-arrow-right ms-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 2: Pre-Consulta -->
+        <div class="col-lg-4 col-md-6">
+          <div class="apple-hub-card" data-view="view-preconsulta">
+            <div class="apple-hub-icon" style="background: var(--primary-tint); color: var(--primary-color);">
+              <i class="fa-solid fa-clipboard-user"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Ficha Digital de Pre-Consulta</h5>
+            <p class="small text-secondary mb-3">
+              Registre sus síntomas antes de salir para agilizar su atención en el Centro de Salud o en el Hospital Parroquial.
+            </p>
+            <div class="apple-link-action">
+              Llenar ficha y generar código <i class="fa-solid fa-arrow-right ms-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 3: Directorio Hospitalario -->
+        <div class="col-lg-4 col-md-6">
+          <div class="apple-hub-card" data-view="view-directorio">
+            <div class="apple-hub-icon" style="background: rgba(0, 113, 227, 0.1); color: #0071E3;">
+              <i class="fa-solid fa-hospital"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Hospitales y Clínicas</h5>
+            <p class="small text-secondary mb-3">
+              Directorio verificado de la Red Pública (MSPAS), Hospital Parroquial Schaffer, Sololá y clínicas privadas locales.
+            </p>
+            <div class="apple-link-action">
+              Consultar directorio médico <i class="fa-solid fa-arrow-right ms-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 4: Educación y Quiz -->
+        <div class="col-lg-4 col-md-6">
+          <div class="apple-hub-card" data-view="view-educacion">
+            <div class="apple-hub-icon" style="background: rgba(255, 149, 0, 0.12); color: #FF9500;">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Educación Preventiva y Quiz</h5>
+            <p class="small text-secondary mb-3">
+              Higiene de manos OMS, agua segura para consumo y cuestionario interactivo de 3 preguntas con validación.
+            </p>
+            <div class="apple-link-action">
+              Tomar cuestionario <i class="fa-solid fa-arrow-right ms-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 5: Donaciones -->
+        <div class="col-lg-4 col-md-6">
+          <div class="apple-hub-card" data-view="view-donaciones">
+            <div class="apple-hub-icon" style="background: rgba(175, 82, 222, 0.12); color: #AF52DE;">
+              <i class="fa-solid fa-hand-holding-dollar"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Portal de Filantropía</h5>
+            <p class="small text-secondary mb-3">
+              Apoyo de filántropos y vecinos para lotes de sueros, insumos de curación y combustible de ambulancia 24/7.
+            </p>
+            <div class="apple-link-action">
+              Apoyar una meta solidaria <i class="fa-solid fa-arrow-right ms-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 6: Vista Personal de Salud -->
+        <div class="col-lg-4 col-md-6">
+          <div class="apple-hub-card" onclick="document.getElementById('btn-panel-medico').click()">
+            <div class="apple-hub-icon" style="background: rgba(255, 204, 0, 0.18); color: #C97A00;">
+              <i class="fa-solid fa-user-doctor"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Panel de Recepción Médica</h5>
+            <p class="small text-secondary mb-3">
+              Visualización en vivo de la cola de pacientes con triaje clínico (Rojo, Amarillo, Verde) para médicos y enfermeros.
+            </p>
+            <div class="apple-link-action text-warning-emphasis">
+              Abrir panel médico <i class="fa-solid fa-arrow-right ms-1"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         VISTA 1: BOTIQUÍN EN CASA "POR SI ACASO" (MÓDULO B)
+         ======================================================================= -->
+    <div id="view-botiquin" class="app-view">
+      <div class="view-header-apple">
+        <span class="apple-tag">Farmacia Familiar Preventiva</span>
+        <h2 class="apple-title">Botiquín en Casa: Insumos y Medicamentos "Por Si Acaso"</h2>
+        <p class="apple-subtitle">
+          Guía de medicamentos e insumos de primeros auxilios que toda familia en San Lucas Tolimán debe guardar en casa para atender imprevistos antes de ir al centro médico.
+        </p>
+      </div>
+
+      <!-- Critical Pediatric Safety Banner -->
+      <div class="safety-banner-apple">
+        <div class="safety-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div>
+          <h6>ADVERTENCIA CRÍTICA: SEGURIDAD DEL BOTIQUÍN INFANTIL</h6>
+          <p>
+            Guarde todos los medicamentos en un lugar <strong>alto, fresco y bajo llave, TOTALMENTE FUERA DEL ALCANCE DE LOS NIÑOS</strong> para evitar intoxicaciones accidentales. <strong>No guarde ni administre antibióticos sobrantes por si acaso</strong>; los antibióticos requieren receta de un profesional médico.
+          </p>
+        </div>
+      </div>
+
+      <!-- Why have a home medicine kit 'por si acaso'? -->
+      <div class="botiquin-banner-apple">
+        <h6 class="fw-bold text-dark mb-2">
+          <i class="fa-solid fa-circle-question text-teal me-1"></i> ¿Por qué es vital tener estos insumos guardados en casa "por si acaso"?
+        </h6>
+        <div class="row g-3 small text-secondary">
+          <div class="col-md-4">
+            <strong class="text-dark d-block mb-1"><i class="fa-solid fa-moon text-primary me-1"></i> Emergencias Nocturnas:</strong>
+            Las fiebres altas o diarreas infantiles suelen presentarse de madrugada. Tener suero o acetaminofén en casa evita horas críticas de deshidratación antes de que abran el puesto de salud.
+          </div>
+          <div class="col-md-4">
+            <strong class="text-dark d-block mb-1"><i class="fa-solid fa-bandage text-success me-1"></i> Primeros Auxilios Inmediatos:</strong>
+            Raspaduras o cortadas en la cocina o campo deben lavarse y desinfectarse de inmediato para evitar infecciones en la piel.
+          </div>
+          <div class="col-md-4">
+            <strong class="text-dark d-block mb-1"><i class="fa-solid fa-calendar-check text-warning me-1"></i> Revisión Periódica:</strong>
+            Inspeccione su botiquín cada 6 meses. Deseche medicamentos vencidos o frascos abiertos con jarabes secos.
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="row align-items-center mb-4 g-3">
+        <div class="col-lg-5 col-md-6">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="fa-solid fa-magnifying-glass text-muted"></i>
+            </span>
+            <input type="text" id="search-medications" class="form-control form-control-apple border-start-0" placeholder="Buscar medicamento o síntoma (suero, fiebre)...">
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-6">
+          <div class="apple-filter-segment">
+            <button class="apple-filter-btn active" data-cat="todos">Todos</button>
+            <button class="apple-filter-btn" data-cat="diarrea">Diarrea / Sueros</button>
+            <button class="apple-filter-btn" data-cat="fiebre">Fiebre / Dolor</button>
+            <button class="apple-filter-btn" data-cat="gripe">Gripe / Congestión</button>
+            <button class="apple-filter-btn" data-cat="parasitos">Parásitos</button>
+            <button class="apple-filter-btn" data-cat="heridas">Heridas / Curaciones</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medications Grid Container -->
+      <div class="row g-3" id="medications-container"></div>
+    </div>
+
+    <!-- =======================================================================
+         VISTA 2: FICHA DIGITAL DE PRE-CONSULTA (MÓDULO C)
+         ======================================================================= -->
+    <div id="view-preconsulta" class="app-view">
+      <div class="view-header-apple">
+        <span class="apple-tag">Admisión y Triaje Rápido</span>
+        <h2 class="apple-title">Ficha Digital de Pre-Consulta Médica</h2>
+        <p class="apple-subtitle">
+          Agilice su recepción en el Centro de Salud o en el Hospital Parroquial enviando sus síntomas antes de salir de casa.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Form Column -->
+        <div class="col-lg-8">
+          <div class="apple-card">
+            <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+              <i class="fa-solid fa-clipboard-check text-primary fs-4"></i>
+              <div>
+                <h5 class="fw-bold mb-0">Datos del Paciente y Selección de Síntomas</h5>
+                <small class="text-muted">Información confidencial para uso exclusivo del personal de salud.</small>
+              </div>
+            </div>
+
+            <form id="form-preconsulta">
+              <div class="row g-3 mb-3">
+                <div class="col-md-7">
+                  <label class="form-label fw-bold small text-dark">Nombre Completo del Paciente *</label>
+                  <input type="text" id="paciente-nombre" class="form-control form-control-apple" placeholder="Ej. Juana Marroquín Chonay" required>
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label fw-bold small text-dark">Edad (Años) *</label>
+                  <input type="number" id="paciente-edad" class="form-control form-control-apple" min="0" max="115" placeholder="Ej. 28" required>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small text-dark">Comunidad o Cantón de Residencia *</label>
+                  <select id="paciente-comunidad" class="form-select form-control-apple" required>
+                    <option value="" selected disabled>Seleccione su comunidad...</option>
+                    <option value="Casco Urbano - Zona 1">Casco Urbano - Zona 1</option>
+                    <option value="Casco Urbano - Zona 2">Casco Urbano - Zona 2</option>
+                    <option value="Cantón Tziquinajay">Cantón Tziquinajay</option>
+                    <option value="Cantón Pachichaj">Cantón Pachichaj</option>
+                    <option value="Cantón Panimaquim">Cantón Panimaquim</option>
+                    <option value="Cantón Choacruz">Cantón Choacruz</option>
+                    <option value="Aldea Pampojilá">Aldea Pampojilá</option>
+                    <option value="Cantón Santo Tomás">Cantón Santo Tomás</option>
+                    <option value="Comunidad Rural / Otra">Comunidad Rural / Otra</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small text-dark">Teléfono o WhatsApp de Contacto</label>
+                  <input type="tel" id="paciente-telefono" class="form-control form-control-apple" placeholder="Ej. 5555-1234">
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small text-dark">¿A qué Centro Médico se dirigirá? *</label>
+                  <select id="paciente-destino" class="form-select form-control-apple fw-semibold" required>
+                    <option value="Centro de Salud San Lucas Tolimán (MSPAS)">Centro de Salud San Lucas Tolimán (MSPAS - 100% Gratuito)</option>
+                    <option value="Hospital Parroquial Monseñor Gregorio Schaffer">Hospital Parroquial Mons. Gregorio Schaffer (Tarifas Sociales)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small text-dark">¿Cuántos días lleva con el malestar? *</label>
+                  <select id="paciente-dias" class="form-select form-control-apple" required>
+                    <option value="1">Menos de 24 horas (Inició hoy)</option>
+                    <option value="2">2 días</option>
+                    <option value="3">3 días</option>
+                    <option value="4">4 días</option>
+                    <option value="5">5 días o más</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Symptoms Checklist -->
+              <div class="mb-4">
+                <label class="form-label fw-bold small text-dark d-block mb-2">
+                  Seleccione todos los síntomas que presenta actualmente: *
+                </label>
+                <div class="row g-2">
+                  <div class="col-md-6">
+                    <label class="apple-check-card w-100">
+                      <input type="checkbox" name="sintomas" value="Fiebre persistente (>38.5°C por más de 3 días)">
+                      <span class="small">Fiebre alta o persistente</span>
+                    </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="apple-check-card w-100">
+                      <input type="checkbox" name="sintomas" value="Diarrea abundante más de 5 veces al día">
+                      <span class="small">Diarrea líquida o constante</span>
+                    </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="apple-check-card w-100" style="border-left: 3px solid #FF3B30;">
+                      <input type="checkbox" name="sintomas" value="Vómitos continuos sin retener suero">
+                      <span class="small fw-semibold text-danger">Vómitos continuos (no retiene líquidos)</span>
+                    </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="apple-check-card w-100">
+                      <input type="checkbox" name="sintomas" value="Dolor abdominal intenso">
+                      <span class="small">Dolor abdominal o cólicos fuertes</span>
+                    </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="apple-check-card w-100" style="border-left: 3px solid #FF3B30;">
+                      <input type="checkbox" name="sintomas" value="Dificultad para respirar / ahogo severo">
+                      <span class="small fw-semibold text-danger">Dificultad para respirar / ahogo</span>
+                    </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="apple-check-card w-100">
+                      <input type="checkbox" name="sintomas" value="Erupción en la piel o ronchas">
+                      <span class="small">Erupción cutánea o ronchas</span>
+                    </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="apple-check-card w-100">
+                      <input type="checkbox" name="sintomas" value="Embarazo con sangrado o dolor">
+                      <span class="small">Embarazo con dolor o control urgente</span>
+                    </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="apple-check-card w-100" style="border-left: 3px solid #FF3B30;">
+                      <input type="checkbox" name="sintomas" value="Pérdida de conciencia / desmayo">
+                      <span class="small fw-semibold text-danger">Pérdida de conciencia / desmayo</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-apple py-3 justify-content-center">
+                  <i class="fa-solid fa-paper-plane me-2"></i> Generar Ficha de Pre-Consulta y Código de Atención
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Information Column -->
+        <div class="col-lg-4">
+          <div class="apple-card mb-3">
+            <h6 class="fw-bold text-dark mb-2">
+              <i class="fa-solid fa-circle-info text-primary me-1"></i> Niveles de Triaje
+            </h6>
+            <p class="small text-secondary mb-3">
+              Clasificación automática para informar a la ventanilla médica y acortar la espera:
+            </p>
+            <div class="d-flex flex-column gap-2 mb-2">
+              <div class="p-2 rounded" style="background: rgba(255, 59, 48, 0.08); border-left: 3px solid #FF3B30;">
+                <span class="badge bg-danger rounded-pill">ROJO</span>
+                <small class="fw-bold text-danger ms-1">Urgencia Inmediata</small>
+                <small class="text-secondary d-block mt-1">Dificultad respiratoria o deshidratación grave. Alerta para ambulancia o Sololá.</small>
+              </div>
+              <div class="p-2 rounded" style="background: rgba(255, 149, 0, 0.08); border-left: 3px solid #FF9500;">
+                <span class="badge bg-warning text-dark rounded-pill">AMARILLO</span>
+                <small class="fw-bold text-warning-emphasis ms-1">Atención Prioritaria</small>
+                <small class="text-secondary d-block mt-1">Fiebre persistente o dolor intenso moderado.</small>
+              </div>
+              <div class="p-2 rounded" style="background: rgba(52, 199, 89, 0.08); border-left: 3px solid #34C759;">
+                <span class="badge bg-success rounded-pill">VERDE</span>
+                <small class="fw-bold text-success ms-1">Consulta Estándar</small>
+                <small class="text-secondary d-block mt-1">Gripes leves, chequeos rutinarios y curaciones menores.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         VISTA 3: DIRECTORIO MÉDICO (TODOS LOS HOSPITALES VISIBLES INMEDIATAMENTE)
+         ======================================================================= -->
+    <div id="view-directorio" class="app-view">
+      <div class="view-header-apple">
+        <span class="apple-tag">Guía de Centros Asistenciales</span>
+        <h2 class="apple-title">Directorio Médico Escalonado de San Lucas Tolimán</h2>
+        <p class="apple-subtitle">
+          Información verificada con números de teléfono directo (llamada en un clic) y ubicación exacta de centros públicos, hospital departamental de Sololá y clínicas privadas locales.
+        </p>
+      </div>
+
+      <!-- Segmented Filter for Directory -->
+      <div class="apple-filter-segment mb-4">
+        <button class="apple-filter-btn active" data-nivel="todos">
+          <i class="fa-solid fa-list me-1"></i> Todos los Centros (8)
+        </button>
+        <button class="apple-filter-btn" data-nivel="1">
+          <i class="fa-solid fa-hospital-user me-1"></i> Red Pública y Social (4)
+        </button>
+        <button class="apple-filter-btn" data-nivel="2">
+          <i class="fa-solid fa-truck-medical me-1"></i> Hospital Regional Sololá (1)
+        </button>
+        <button class="apple-filter-btn" data-nivel="3">
+          <i class="fa-solid fa-user-doctor me-1"></i> Clínicas Privadas (3)
+        </button>
+      </div>
+
+      <!-- NIVEL 1: Red Pública y Social Accesible -->
+      <div id="seccion-dir-nivel-1" class="mb-4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="badge bg-success rounded-pill px-3 py-1">NIVEL 1</span>
+          <h5 class="fw-bold text-dark mb-0">Red Pública y Social Accesible (Prioridad Principal)</h5>
+        </div>
+        <p class="text-muted small mb-3">Servicios 100% gratuitos del Ministerio de Salud o con tarifas sociales comunitarias accesibles.</p>
+        <div class="row" id="directorio-nivel-1"></div>
+      </div>
+
+      <!-- NIVEL 2: Emergencia Mayor Regional (Sololá) -->
+      <div id="seccion-dir-nivel-2" class="mb-4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="badge bg-danger rounded-pill px-3 py-1">NIVEL 2</span>
+          <h5 class="fw-bold text-dark mb-0">Emergencia Mayor Regional (Hospital de Referencia Nacional)</h5>
+        </div>
+        <p class="text-muted small mb-3">Cuando el Centro de Salud o el Hospital Parroquial no dan abasto para cirugías mayores, cuidados intensivos o trauma complejo.</p>
+        <div class="row" id="directorio-nivel-2"></div>
+      </div>
+
+      <!-- NIVEL 3: Opciones Privadas (TOTALMENTE VISIBLES) -->
+      <div id="seccion-dir-nivel-3" class="mb-4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="badge bg-secondary rounded-pill px-3 py-1">NIVEL 3</span>
+          <h5 class="fw-bold text-dark mb-0">Hospitales y Clínicas Privadas en San Lucas Tolimán</h5>
+        </div>
+        
+        <div class="p-3 mb-3 rounded" style="background: #F2F2F7; border-left: 3px solid #8E8E93;">
+          <small class="text-dark">
+            <strong><i class="fa-solid fa-triangle-exclamation text-warning me-1"></i> NOTA DE COSTOS PRIVADOS:</strong> 
+            Servicios privados comerciales presentados con fines informativos. Utilícelos si dispone de recursos económicos particulares suficientes para consultas, ultrasonidos o cirugías privadas.
+          </small>
+        </div>
+
+        <!-- Rendered Private Cards -->
+        <div class="row" id="directorio-nivel-3"></div>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         VISTA 4: EDUCACIÓN PREVENTIVA Y QUIZ (MÓDULO A)
+         ======================================================================= -->
+    <div id="view-educacion" class="app-view">
+      <div class="view-header-apple">
+        <span class="apple-tag">Prevención en Salud</span>
+        <h2 class="apple-title">Educación Sanitaria y Cuestionario Interactivo</h2>
+        <p class="apple-subtitle">Prácticas fundamentales para evitar infecciones digestivas y respiratorias en nuestro municipio.</p>
+      </div>
+
+      <!-- Educational Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="apple-card h-100">
+            <div class="apple-hub-icon" style="background: rgba(0, 122, 120, 0.1); color: var(--primary-color);">
+              <i class="fa-solid fa-hands-bubbles"></i>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">Higiene de Manos OMS</h5>
+            <p class="small text-secondary mb-2">Lavado correcto de 20 a 40 segundos con agua y jabón cubriendo palmas, dorsos, entre dedos y uñas.</p>
+            <div class="border-top pt-2 mt-auto">
+              <strong class="small text-dark d-block">5 Momentos Críticos:</strong>
+              <small class="text-muted">Antes de comer o cocinar, después de ir al baño, cambiar pañales y al volver de la calle.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="apple-card h-100">
+            <div class="apple-hub-icon" style="background: rgba(0, 113, 227, 0.1); color: #0071E3;">
+              <i class="fa-solid fa-droplet"></i>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">Consumo de Agua Segura</h5>
+            <p class="small text-secondary mb-2">Hervir el agua a borbotones durante 3 a 5 minutos o usar 2 gotas de cloro por cada litro de agua clara.</p>
+            <div class="border-top pt-2 mt-auto">
+              <strong class="small text-dark d-block">Prevención:</strong>
+              <small class="text-muted">Evita amebiasis y diarreas graves. Nunca tome agua sin tratar directamente del lago o pozos.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+          <div class="apple-card h-100">
+            <div class="apple-hub-icon" style="background: rgba(52, 199, 89, 0.12); color: #34C759;">
+              <i class="fa-solid fa-apple-whole"></i>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">Manejo de Alimentos</h5>
+            <p class="small text-secondary mb-2">Lavar verduras con agua desinfectada, cocinar completamente carnes y proteger la comida de las moscas.</p>
+            <div class="border-top pt-2 mt-auto">
+              <strong class="small text-dark d-block">Regla de Oro:</strong>
+              <small class="text-muted">Consuma los alimentos recién preparados o recaliente a fuego vivo antes de servir.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Section -->
+      <div class="apple-card">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-2 border-bottom">
+          <div>
+            <h5 class="fw-bold text-dark mb-1">
+              <i class="fa-solid fa-circle-question text-primary me-2"></i> Cuestionario de Validación
+            </h5>
+            <span class="text-muted small">Responda las 3 preguntas para evaluar sus hábitos de prevención.</span>
+          </div>
+          <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+            <span class="badge" style="background: var(--primary-tint); color: var(--primary-color); font-size: 0.9rem;" id="quiz-score-display">0 / 3</span>
+            <button class="btn btn-sm btn-apple-secondary" id="btn-reset-quiz">
+              <i class="fa-solid fa-rotate-left me-1"></i> Reiniciar
+            </button>
+          </div>
+        </div>
+
+        <div id="quiz-questions-container"></div>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         VISTA 5: PORTAL DE FILANTROPÍA Y DONACIONES (MÓDULO E)
+         ======================================================================= -->
+    <div id="view-donaciones" class="app-view">
+      <div class="view-header-apple">
+        <span class="apple-tag">Solidaridad Comunitaria</span>
+        <h2 class="apple-title">Portal de Filantropía y Donaciones Directas</h2>
+        <p class="apple-subtitle">
+          Canalice aportes directos para resolver el desabastecimiento de medicamentos e insumos del Centro de Salud y del Hospital Parroquial.
+        </p>
+      </div>
+
+      <!-- Live Global Total Card -->
+      <div class="apple-card mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+          <span class="text-secondary small fw-bold text-uppercase">Total Recaudado</span>
+          <h3 class="fw-bold mb-0 text-dark" id="total-recaudado-global">Q 0.00</h3>
+        </div>
+        <div>
+          <span class="badge" style="background: rgba(52, 199, 89, 0.12); color: #248A3D; font-size: 0.85rem; padding: 6px 14px; border-radius: 980px;">
+            <i class="fa-solid fa-shield-heart me-1"></i> Fondos destinados al suministro de insumos
+          </span>
+        </div>
+      </div>
+
+      <!-- Goals Container -->
+      <div class="row" id="donations-goals-container"></div>
+
+      <!-- Donation Form Box -->
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="apple-card">
+            <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+              <i class="fa-solid fa-hand-holding-dollar text-primary fs-4"></i>
+              <div>
+                <h5 class="fw-bold mb-0">Registrar Aporte Solidario</h5>
+                <small class="text-muted">Aporte directo de filántropos, turistas, empresas o vecinos.</small>
+              </div>
+            </div>
+
+            <form id="form-donacion">
+              <div class="row g-3 mb-3">
+                <div class="col-md-7">
+                  <label class="form-label fw-bold small text-dark">Nombre del Donante / Entidad</label>
+                  <input type="text" id="donante-nombre" class="form-control form-control-apple" placeholder="Ej. Familia López / Turista / Anónimo">
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label fw-bold small text-dark">Tipo de Donante</label>
+                  <select id="donante-tipo" class="form-select form-control-apple">
+                    <option value="Donante Particular">Donante Particular / Vecino</option>
+                    <option value="Turista / Donante Internacional">Turista / Donante Internacional</option>
+                    <option value="Empresa / Negocio Local">Empresa / Negocio Local</option>
+                    <option value="Organización Solidaria">Organización Solidaria</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small text-dark">Meta a respaldar *</label>
+                  <select id="donante-meta" class="form-select form-control-apple fw-semibold" required>
+                    <option value="meta-suero-zinc">Lote de 500 sobres de Suero Oral y Zinc (Q 2,500.00)</option>
+                    <option value="meta-insumos-antibioticos">Insumos de curación y antibióticos pediátricos (Q 5,000.00)</option>
+                    <option value="meta-ambulancia">Fondo Solidario de Combustible para Ambulancia (Q 8,000.00)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small text-dark">Monto (En Quetzales Q) *</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 fw-bold">Q</span>
+                    <input type="number" id="donante-monto" class="form-control form-control-apple border-start-0" min="5" step="1" placeholder="Ej. 250" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small text-dark">Contacto (Teléfono o Correo)</label>
+                  <input type="text" id="donante-contacto" class="form-control form-control-apple" placeholder="Opcional para recibo oficial">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small text-dark">Mensaje Solidario</label>
+                  <input type="text" id="donante-mensaje" class="form-control form-control-apple" placeholder="Ej. Con aprecio para los niños de Tolimán">
+                </div>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-apple py-3 justify-content-center">
+                  <i class="fa-solid fa-gift me-2"></i> Registrar Aporte y Generar Certificado de Gratitud
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- iOS-Style Mobile Bottom Bar -->
+  <div class="apple-mobile-bar">
+    <a class="apple-tab-item active" data-view="view-inicio">
+      <i class="fa-solid fa-house"></i>
+      <span>Inicio</span>
+    </a>
+    <a class="apple-tab-item" data-view="view-botiquin">
+      <i class="fa-solid fa-kit-medical"></i>
+      <span>Botiquín</span>
+    </a>
+    <a class="apple-tab-item" data-view="view-preconsulta">
+      <i class="fa-solid fa-file-waveform"></i>
+      <span>Consulta</span>
+    </a>
+    <a class="apple-tab-item" data-view="view-directorio">
+      <i class="fa-solid fa-hospital"></i>
+      <span>Hospitales</span>
+    </a>
+    <a class="apple-tab-item" data-view="view-donaciones">
+      <i class="fa-solid fa-hand-holding-dollar"></i>
+      <span>Donar</span>
+    </a>
+  </div>
+
+  <!-- MODAL: Ficha Resumen (Paciente) -->
+  <div class="modal fade" id="modal-ficha-resumen" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content modal-content-apple">
+        <div class="modal-header border-bottom py-3">
+          <h5 class="modal-title fw-bold">
+            <i class="fa-solid fa-id-card-clip text-primary me-2"></i> Ficha de Pre-Consulta Médica
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="p-4 border rounded text-center mb-3" style="background: #FAFAFC;">
+            <div class="small text-muted">Código de Atención Asignado</div>
+            <div class="fs-3 fw-bold font-monospace text-primary" id="ticket-codigo">SLT-2026-0001</div>
+            <div class="small text-muted" id="ticket-fecha">-</div>
+          </div>
+
+          <div id="ticket-alerta-critica" class="d-none"></div>
+
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <small class="text-muted d-block">Paciente:</small>
+              <strong class="text-dark" id="ticket-paciente">-</strong>
+            </div>
+            <div class="col-sm-6">
+              <small class="text-muted d-block">Comunidad:</small>
+              <strong class="text-dark" id="ticket-comunidad">-</strong>
+            </div>
+            <div class="col-sm-6">
+              <small class="text-muted d-block">Centro de Destino:</small>
+              <strong class="text-dark" id="ticket-destino">-</strong>
+            </div>
+            <div class="col-sm-6">
+              <small class="text-muted d-block">Días con malestar:</small>
+              <strong class="text-dark" id="ticket-dias">-</strong>
+            </div>
+            <div class="col-12">
+              <small class="text-muted d-block">Síntomas Reportados:</small>
+              <div class="p-2 rounded small text-dark" style="background: #F2F2F7;" id="ticket-sintomas">-</div>
+            </div>
+            <div class="col-12">
+              <small class="text-muted d-block">Triaje:</small>
+              <div id="ticket-triaje-badge" class="badge">TRIAJE</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top py-2">
+          <button type="button" class="btn btn-sm btn-apple-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-sm btn-apple-secondary" id="btn-imprimir-ficha">
+            <i class="fa-solid fa-print me-1"></i> Imprimir
+          </button>
+          <button type="button" class="btn btn-sm btn-apple-call" id="btn-whatsapp-ficha">
+            <i class="fa-brands fa-whatsapp me-1"></i> Enviar por WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Panel Médico -->
+  <div class="modal fade" id="modal-panel-medico" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+      <div class="modal-content modal-content-apple">
+        <div class="modal-header border-bottom py-3">
+          <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-stethoscope text-primary fs-4"></i>
+            <div>
+              <h5 class="modal-title fw-bold mb-0">Panel de Recepción y Triaje Médico</h5>
+              <small class="text-secondary">Cola de pacientes en espera en San Lucas Tolimán</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body p-4" style="background: #F9F9FB;">
+          <div class="row g-2 mb-3 bg-white p-3 rounded border">
+            <div class="col-md-5">
+              <label class="form-label small fw-bold text-dark mb-1">Destino:</label>
+              <select id="filtro-doctor-destino" class="form-select form-select-sm form-control-apple">
+                <option value="todos">Todos los Centros Médicos</option>
+                <option value="Centro de Salud">Centro de Salud San Lucas Tolimán (MSPAS)</option>
+                <option value="Hospital Parroquial">Hospital Parroquial Mons. Gregorio Schaffer</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark mb-1">Estado:</label>
+              <select id="filtro-doctor-estado" class="form-select form-select-sm form-control-apple">
+                <option value="todos">Todos los Estados</option>
+                <option value="Pendiente" selected>Solo Pacientes en Espera (Pendientes)</option>
+                <option value="Atendido">Pacientes Atendidos</option>
+              </select>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+              <button class="btn btn-sm btn-apple-secondary w-100" onclick="loadDoctorFichas()">
+                <i class="fa-solid fa-rotate me-1"></i> Actualizar Cola
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded border overflow-hidden">
+            <table class="table table-hover mb-0">
+              <thead class="table-light small">
+                <tr>
+                  <th>Código</th>
+                  <th>Paciente</th>
+                  <th>Triaje</th>
+                  <th>Síntomas</th>
+                  <th>Destino</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="doctor-fichas-tbody" class="small">
+                <tr>
+                  <td colspan="7" class="text-center py-4 text-muted">Cargando fichas de pacientes...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer border-top py-2">
+          <button type="button" class="btn btn-sm btn-apple-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Recibo de Donación -->
+  <div class="modal fade" id="modal-recibo-donacion" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-apple">
+        <div class="modal-header border-bottom py-3">
+          <h5 class="modal-title fw-bold">
+            <i class="fa-solid fa-award text-teal me-2"></i> Constancia de Aporte Solidario
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <div class="p-4 border rounded mb-3" style="background: #FAFAFC;">
+            <div class="small text-muted">Folio de Reconocimiento</div>
+            <div class="fs-4 fw-bold font-monospace text-teal" id="recibo-codigo">DON-SLT-2026-0001</div>
+            <div class="small text-muted" id="recibo-fecha">-</div>
+          </div>
+
+          <p class="text-secondary small mb-1">La Comunidad de San Lucas Tolimán agradece a:</p>
+          <h4 class="fw-bold text-dark mb-1" id="recibo-donante">Nombre del Donante</h4>
+          <span class="badge bg-light text-secondary border mb-3" id="recibo-tipo">Tipo</span>
+
+          <div class="p-3 rounded text-start mb-3" style="background: #F2F2F7;">
+            <div class="d-flex justify-content-between mb-1">
+              <small class="text-muted">Causa Patrocinada:</small>
+              <strong class="text-dark small" id="recibo-meta">-</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <small class="text-muted">Monto Donado:</small>
+              <strong class="text-teal fs-5" id="recibo-monto">Q 0.00</strong>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top py-2">
+          <button type="button" class="btn btn-sm btn-apple-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-sm btn-apple" id="btn-imprimir-recibo">
+            <i class="fa-solid fa-print me-1"></i> Imprimir Constancia
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimalist Footer -->
+  <footer class="py-4 text-center mt-5 text-secondary border-top bg-white">
+    <div class="container small">
+      <div class="fw-bold text-dark mb-1">Aprendamos Salud San Lucas Tolimán</div>
+      <div class="mb-2">Sololá, Guatemala</div>
+      <div class="text-muted">
+        <span>MSPAS: 7792-0488</span> | 
+        <span>Hospital Parroquial: 7722-0097</span> | 
+        <span>Bomberos Voluntarios: 7722-0122</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5.3.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+  <!-- Application Script -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

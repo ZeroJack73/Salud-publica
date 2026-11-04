@@ -1,0 +1,32 @@
+{
+  "name": "Aprendamos Salud San Lucas Tolimán",
+  "short_name": "Salud SLT",
+  "description": "Plataforma comunitaria de salud preventiva, pre-consulta médica y directorio de San Lucas Tolimán, Sololá.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F0F4F8",
+  "theme_color": "#00796B",
+  "icons": [
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["medical", "health", "education"]
+}
+
