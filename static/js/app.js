@@ -4,6 +4,59 @@
  * Zero emojis - All icons through FontAwesome and SVGs
  */
 
+/* ==========================================================================
+   SEGURIDAD GLOBAL: Sanitización Anti-XSS y Bloqueo de Prompt Injection
+   Cualquier código escrito en casillas se convierte en texto plano para
+   impedir su ejecución (&lt;script&gt;...).
+   ========================================================================== */
+function escapeHTML(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function checkAntiInjection(text, fieldName = 'el campo') {
+  if (text === null || text === undefined) return '';
+  const str = String(text).trim();
+  if (!str) return '';
+
+  const injectionPatterns = [
+    /(?:ignore\s+(?:all\s+)?(?:previous|prior)\s+instructions)/i,
+    /(?:disregard\s+(?:all\s+)?(?:previous|prior))/i,
+    /(?:olvida\s+(?:todas\s+las\s+)?instrucciones)/i,
+    /(?:ignora\s+(?:todas\s+las\s+)?instrucciones)/i,
+    /(?:you\s+are\s+now\s+(?:an?|the))/i,
+    /(?:ahora\s+eres\s+(?:un|el|la))/i,
+    /(?:act\s+as\s+(?:an?|the|a\s+different))/i,
+    /(?:actua\s+como\s+(?:un|el|la))/i,
+    /(?:system\s*:)/i,
+    /(?:system\s+prompt)/i,
+    /(?:developer\s+mode)/i,
+    /(?:modo\s+desarrollador)/i,
+    /(?:jailbreak)/i,
+    /(?:DAN\s+mode)/i,
+    /(?:bypass\s+(?:safety|filter|rules))/i,
+    /(?:output\s+only\s+(?:the\s+)?password)/i,
+    /(?:reveal\s+(?:the\s+)?secret)/i,
+    /(?:union\s+select)/i,
+    /(?:drop\s+table)/i,
+    /(?:insert\s+into\s+usuarios)/i
+  ];
+
+  for (const p of injectionPatterns) {
+    if (p.test(str)) {
+      throw new Error(`Entrada bloqueada por seguridad: se detectó un intento de inyección o comando no permitido en ${fieldName}.`);
+    }
+  }
+
+  // Se sanitiza y escapa cualquier código HTML/JS para que sea tratado como texto plano
+  return escapeHTML(str);
+}
+
 // Verified Directory Initial Data
 const defaultDirectoryData = [
   {
@@ -798,53 +851,57 @@ function initPreConsultaModule() {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const nombre = document.getElementById('paciente-nombre').value.trim();
-    const edad = parseInt(document.getElementById('paciente-edad').value, 10);
-    const comunidad = document.getElementById('paciente-comunidad').value;
-    const telefono = document.getElementById('paciente-telefono').value.trim();
-    const dias_malestar = parseInt(document.getElementById('paciente-dias').value, 10);
-    const destino = document.getElementById('paciente-destino').value;
+    try {
+      const nombre = checkAntiInjection(document.getElementById('paciente-nombre').value, 'Nombre del paciente');
+      const edad = parseInt(document.getElementById('paciente-edad').value, 10);
+      const comunidad = checkAntiInjection(document.getElementById('paciente-comunidad').value, 'Comunidad');
+      const telefono = checkAntiInjection(document.getElementById('paciente-telefono').value, 'Teléfono');
+      const dias_malestar = parseInt(document.getElementById('paciente-dias').value, 10);
+      const destino = checkAntiInjection(document.getElementById('paciente-destino').value, 'Centro de destino');
 
-    const symptomCheckboxes = document.querySelectorAll('input[name="sintomas"]:checked');
-    const sintomas = Array.from(symptomCheckboxes).map(cb => cb.value);
+      const symptomCheckboxes = document.querySelectorAll('input[name="sintomas"]:checked');
+      const sintomas = Array.from(symptomCheckboxes).map(cb => checkAntiInjection(cb.value, 'Síntomas'));
 
-    if (sintomas.length === 0) {
-      showNotification('Seleccione Síntomas', 'Debe seleccionar al menos un síntoma para el triaje.', 'warning', 2500);
-      return;
-    }
+      if (sintomas.length === 0) {
+        showNotification('Seleccione Síntomas', 'Debe seleccionar al menos un síntoma para el triaje.', 'warning', 2500);
+        return;
+      }
 
-    const fichaPayload = {
-      nombre,
-      edad,
-      comunidad,
-      telefono,
-      sintomas,
-      dias_malestar,
-      destino
-    };
+      const fichaPayload = {
+        nombre,
+        edad,
+        comunidad,
+        telefono,
+        sintomas,
+        dias_malestar,
+        destino
+      };
 
-    if (navigator.onLine) {
-      try {
-        const response = await fetch('/api/fichas', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(fichaPayload)
-        });
+      if (navigator.onLine) {
+        try {
+          const response = await fetch('/api/fichas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(fichaPayload)
+          });
 
-        const result = await response.json();
-        if (response.ok && result.status === 'success') {
-          showNotification('Lugar Apartado con Éxito', `Código de Turno: ${result.data.codigo}`, 'success', 2200);
-          displayFichaSummary(result.data);
-          form.reset();
-          loadDoctorFichas();
-        } else {
-          showNotification('Error', result.message || 'No se pudo apartar turno.', 'error', 3000);
+          const result = await response.json();
+          if (response.ok && result.status === 'success') {
+            showNotification('Lugar Apartado con Éxito', `Código de Turno: ${result.data.codigo}`, 'success', 2200);
+            displayFichaSummary(result.data);
+            form.reset();
+            loadDoctorFichas();
+          } else {
+            showNotification('Error', result.message || 'No se pudo apartar turno.', 'error', 3000);
+          }
+        } catch (err) {
+          saveFichaOffline(fichaPayload);
         }
-      } catch (err) {
+      } else {
         saveFichaOffline(fichaPayload);
       }
-    } else {
-      saveFichaOffline(fichaPayload);
+    } catch (secErr) {
+      showNotification('Validación de Seguridad', secErr.message, 'error', 3500);
     }
   });
 
@@ -1228,16 +1285,16 @@ function renderDoctorTable(fichas) {
 
     return `
       <tr class="${f.nivel_triaje === 'ROJO' && !esAtendido && !esReferido ? 'table-danger' : ''}">
-        <td class="fw-bold text-primary font-monospace">${f.codigo}</td>
+        <td class="fw-bold text-primary font-monospace">${escapeHTML(f.codigo)}</td>
         <td>
-          <div class="fw-bold">${f.nombre}</div>
-          <small class="text-muted">${f.edad} años | ${f.comunidad}</small>
+          <div class="fw-bold">${escapeHTML(f.nombre)}</div>
+          <small class="text-muted">${escapeHTML(f.edad)} años | ${escapeHTML(f.comunidad)}</small>
         </td>
         <td>${triajeBadge}</td>
-        <td><small class="text-dark">${f.sintomas}</small></td>
+        <td><small class="text-dark">${escapeHTML(f.sintomas)}</small></td>
         <td>
-          <small class="text-muted d-block">${f.destino}</small>
-          ${f.referido_a ? `<small class="text-primary fw-bold"><i class="fa-solid fa-arrow-right me-1"></i> ${f.referido_a}</small>` : ''}
+          <small class="text-muted d-block">${escapeHTML(f.destino)}</small>
+          ${f.referido_a ? `<small class="text-primary fw-bold"><i class="fa-solid fa-arrow-right me-1"></i> ${escapeHTML(f.referido_a)}</small>` : ''}
         </td>
         <td>${estadoBadge}</td>
         <td>
