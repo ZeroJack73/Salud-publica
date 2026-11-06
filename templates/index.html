@@ -8,7 +8,7 @@
   <!-- PWA & Meta Tags -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#FFFFFF">
-  <meta name="description" content="Plataforma de salud preventiva, botiquín del hogar, triaje y directorio médico de San Lucas Tolimán, Sololá.">
+  <meta name="description" content="Plataforma de salud preventiva, botiquín familiar, triaje y directorio médico de San Lucas Tolimán, Sololá.">
   <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
   <link rel="icon" type="image/x-icon" href="/static/icons/favicon.ico">
   
@@ -68,8 +68,9 @@
 
       <!-- Action Buttons -->
       <div class="d-flex align-items-center gap-2">
-        <button class="btn btn-sm btn-apple-secondary" id="btn-panel-medico" style="font-size: 0.82rem;">
-          <i class="fa-solid fa-user-doctor me-1"></i> Médico
+        <!-- Protected Medical Window Button -->
+        <button class="btn btn-sm btn-apple-secondary" id="btn-panel-medico" style="font-size: 0.82rem;" title="Acceso seguro para doctores y enfermeros de los centros de salud">
+          <i class="fa-solid fa-stethoscope me-1 text-primary"></i> Ventanilla Médica
           <span class="badge bg-danger rounded-pill ms-1" id="doctor-pending-count">0</span>
         </button>
 
@@ -97,7 +98,7 @@
         </span>
         <h1 class="apple-title">Atención Oportuna y Prevención Familiar</h1>
         <p class="apple-subtitle">
-          Plataforma médica para los habitantes de San Lucas Tolimán, Sololá. Seleccione directamente el servicio que necesita:
+          Plataforma médica para las familias de San Lucas Tolimán, Sololá. Seleccione directamente el servicio que necesita:
         </p>
       </div>
 
@@ -109,9 +110,9 @@
             <div class="apple-hub-icon" style="background: rgba(52, 199, 89, 0.12); color: #34C759;">
               <i class="fa-solid fa-kit-medical"></i>
             </div>
-            <h5 class="fw-bold mb-1">Botiquín en Casa "Por Si Acaso"</h5>
+            <h5 class="fw-bold mb-1">Botiquín en Casa</h5>
             <p class="small text-secondary mb-3">
-              Medicamentos e insumos básicos que debe tener listos para emergencias nocturnas o repentinas en el hogar.
+              Medicamentos e insumos básicos que debe tener listos en su hogar con dosis seguras y señales de alarma hospitalaria.
             </p>
             <div class="apple-link-action">
               Ver botiquín y medicamentos <i class="fa-solid fa-arrow-right ms-1"></i>
@@ -125,12 +126,12 @@
             <div class="apple-hub-icon" style="background: var(--primary-tint); color: var(--primary-color);">
               <i class="fa-solid fa-clipboard-user"></i>
             </div>
-            <h5 class="fw-bold mb-1">Ficha Digital de Pre-Consulta</h5>
+            <h5 class="fw-bold mb-1">Ficha de Pre-Consulta (Apartar Turno)</h5>
             <p class="small text-secondary mb-3">
-              Registre sus síntomas antes de salir para agilizar su atención en el Centro de Salud o en el Hospital Parroquial.
+              Aparte su lugar antes de salir de casa para agilizar su turno en el Centro de Salud o en el Hospital Parroquial.
             </p>
             <div class="apple-link-action">
-              Llenar ficha y generar código <i class="fa-solid fa-arrow-right ms-1"></i>
+              Apartar lugar y generar código <i class="fa-solid fa-arrow-right ms-1"></i>
             </div>
           </div>
         </div>
@@ -143,7 +144,7 @@
             </div>
             <h5 class="fw-bold mb-1">Hospitales y Clínicas</h5>
             <p class="small text-secondary mb-3">
-              Directorio verificado de la Red Pública (MSPAS), Hospital Parroquial Schaffer, Sololá y clínicas privadas locales.
+              Directorio verificado con teléfonos directos de la Red Pública (MSPAS), Hospital Parroquial Schaffer, Sololá y clínicas privadas.
             </p>
             <div class="apple-link-action">
               Consultar directorio médico <i class="fa-solid fa-arrow-right ms-1"></i>
@@ -159,7 +160,7 @@
             </div>
             <h5 class="fw-bold mb-1">Educación Preventiva y Quiz</h5>
             <p class="small text-secondary mb-3">
-              Higiene de manos OMS, agua segura para consumo y cuestionario interactivo de 3 preguntas con validación.
+              Higiene de manos OMS, agua segura para consumo y cuestionario interactivo de 3 preguntas con calificación.
             </p>
             <div class="apple-link-action">
               Tomar cuestionario <i class="fa-solid fa-arrow-right ms-1"></i>
@@ -175,7 +176,7 @@
             </div>
             <h5 class="fw-bold mb-1">Portal de Filantropía</h5>
             <p class="small text-secondary mb-3">
-              Apoyo de filántropos y vecinos para lotes de sueros, insumos de curación y combustible de ambulancia 24/7.
+              Canal de apoyo para abastecer de sueros, insumos de curación y combustible para ambulancia 24/7.
             </p>
             <div class="apple-link-action">
               Apoyar una meta solidaria <i class="fa-solid fa-arrow-right ms-1"></i>
@@ -183,18 +184,18 @@
           </div>
         </div>
 
-        <!-- Hub 6: Vista Personal de Salud -->
+        <!-- Hub 6: Vista Personal de Salud (Protegida) -->
         <div class="col-lg-4 col-md-6">
           <div class="apple-hub-card" onclick="document.getElementById('btn-panel-medico').click()">
             <div class="apple-hub-icon" style="background: rgba(255, 204, 0, 0.18); color: #C97A00;">
               <i class="fa-solid fa-user-doctor"></i>
             </div>
-            <h5 class="fw-bold mb-1">Panel de Recepción Médica</h5>
+            <h5 class="fw-bold mb-1">Ventanilla de Personal Médico</h5>
             <p class="small text-secondary mb-3">
-              Visualización en vivo de la cola de pacientes con triaje clínico (Rojo, Amarillo, Verde) para médicos y enfermeros.
+              Acceso seguro para doctores y recepcionistas para atender pacientes en cola o transferir casos no resueltos.
             </p>
             <div class="apple-link-action text-warning-emphasis">
-              Abrir panel médico <i class="fa-solid fa-arrow-right ms-1"></i>
+              Acceso institucional <i class="fa-solid fa-lock ms-1"></i>
             </div>
           </div>
         </div>
@@ -202,14 +203,14 @@
     </div>
 
     <!-- =======================================================================
-         VISTA 1: BOTIQUÍN EN CASA "POR SI ACASO" (MÓDULO B)
+         VISTA 1: BOTIQUÍN EN CASA (MÓDULO B - MINIMALISTA Y RESUMIDO)
          ======================================================================= -->
     <div id="view-botiquin" class="app-view">
       <div class="view-header-apple">
         <span class="apple-tag">Farmacia Familiar Preventiva</span>
-        <h2 class="apple-title">Botiquín en Casa: Insumos y Medicamentos "Por Si Acaso"</h2>
+        <h2 class="apple-title">Botiquín del Hogar: Insumos Básicos y Guía Rápida</h2>
         <p class="apple-subtitle">
-          Guía de medicamentos e insumos de primeros auxilios que toda familia en San Lucas Tolimán debe guardar en casa para atender imprevistos antes de ir al centro médico.
+          Guía médica simplificada. Toque cualquier elemento para desplegar sus dosis seguras y señales de alarma inmediata.
         </p>
       </div>
 
@@ -221,33 +222,12 @@
         <div>
           <h6>ADVERTENCIA CRÍTICA: SEGURIDAD DEL BOTIQUÍN INFANTIL</h6>
           <p>
-            Guarde todos los medicamentos en un lugar <strong>alto, fresco y bajo llave, TOTALMENTE FUERA DEL ALCANCE DE LOS NIÑOS</strong> para evitar intoxicaciones accidentales. <strong>No guarde ni administre antibióticos sobrantes por si acaso</strong>; los antibióticos requieren receta de un profesional médico.
+            Guarde todos los medicamentos en un lugar <strong>alto, fresco y bajo llave, TOTALMENTE FUERA DEL ALCANCE DE LOS NIÑOS</strong> para evitar intoxicaciones accidentales. <strong>No automedique antibióticos</strong> bajo ninguna circunstancia sin receta médica.
           </p>
         </div>
       </div>
 
-      <!-- Why have a home medicine kit 'por si acaso'? -->
-      <div class="botiquin-banner-apple">
-        <h6 class="fw-bold text-dark mb-2">
-          <i class="fa-solid fa-circle-question text-teal me-1"></i> ¿Por qué es vital tener estos insumos guardados en casa "por si acaso"?
-        </h6>
-        <div class="row g-3 small text-secondary">
-          <div class="col-md-4">
-            <strong class="text-dark d-block mb-1"><i class="fa-solid fa-moon text-primary me-1"></i> Emergencias Nocturnas:</strong>
-            Las fiebres altas o diarreas infantiles suelen presentarse de madrugada. Tener suero o acetaminofén en casa evita horas críticas de deshidratación antes de que abran el puesto de salud.
-          </div>
-          <div class="col-md-4">
-            <strong class="text-dark d-block mb-1"><i class="fa-solid fa-bandage text-success me-1"></i> Primeros Auxilios Inmediatos:</strong>
-            Raspaduras o cortadas en la cocina o campo deben lavarse y desinfectarse de inmediato para evitar infecciones en la piel.
-          </div>
-          <div class="col-md-4">
-            <strong class="text-dark d-block mb-1"><i class="fa-solid fa-calendar-check text-warning me-1"></i> Revisión Periódica:</strong>
-            Inspeccione su botiquín cada 6 meses. Deseche medicamentos vencidos o frascos abiertos con jarabes secos.
-          </div>
-        </div>
-      </div>
-
-      <!-- Search & Filters -->
+      <!-- Search & Category Filters -->
       <div class="row align-items-center mb-4 g-3">
         <div class="col-lg-5 col-md-6">
           <div class="input-group">
@@ -269,20 +249,41 @@
         </div>
       </div>
 
-      <!-- Medications Grid Container -->
+      <!-- Minimalist Medications Grid Container -->
       <div class="row g-3" id="medications-container"></div>
     </div>
 
     <!-- =======================================================================
-         VISTA 2: FICHA DIGITAL DE PRE-CONSULTA (MÓDULO C)
+         VISTA 2: FICHA DIGITAL DE PRE-CONSULTA (CÓMO APARTAR LUGAR)
          ======================================================================= -->
     <div id="view-preconsulta" class="app-view">
       <div class="view-header-apple">
-        <span class="apple-tag">Admisión y Triaje Rápido</span>
-        <h2 class="apple-title">Ficha Digital de Pre-Consulta Médica</h2>
+        <span class="apple-tag">Admisión Rápida de Pacientes</span>
+        <h2 class="apple-title">Ficha de Pre-Consulta Médica</h2>
         <p class="apple-subtitle">
-          Agilice su recepción en el Centro de Salud o en el Hospital Parroquial enviando sus síntomas antes de salir de casa.
+          Aparte su turno digitalmente antes de salir de casa para agilizar su recepción en el Centro de Salud o en el Hospital Parroquial.
         </p>
+      </div>
+
+      <!-- Explanatory Guide: How to reserve spot -->
+      <div class="apple-card mb-4" style="background: #F0FDF4; border: 1px solid #BBF7D0;">
+        <h6 class="fw-bold text-success mb-2">
+          <i class="fa-solid fa-circle-question text-success me-1"></i> ¿Cómo apartar su lugar en la consulta médica?
+        </h6>
+        <div class="row g-3 small text-secondary">
+          <div class="col-md-4">
+            <strong class="text-dark d-block">1. Ingrese sus síntomas:</strong>
+            Llene el formulario con el nombre del paciente, edad y marque los malestares que presenta actualmente.
+          </div>
+          <div class="col-md-4">
+            <strong class="text-dark d-block">2. Obtenga su Código de Turno:</strong>
+            Al enviar, el sistema genera su código correlativo (ej. <strong>SLT-2026-0001</strong>) y evalúa la urgencia del triaje.
+          </div>
+          <div class="col-md-4">
+            <strong class="text-dark d-block">3. Preséntelo en Ventanilla:</strong>
+            Al llegar al Centro de Salud o al Hospital Parroquial, muestre su código. El médico o enfermero ya tendrá sus datos en pantalla para llamarlo.
+          </div>
+        </div>
       </div>
 
       <div class="row g-4">
@@ -292,7 +293,7 @@
             <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
               <i class="fa-solid fa-clipboard-check text-primary fs-4"></i>
               <div>
-                <h5 class="fw-bold mb-0">Datos del Paciente y Selección de Síntomas</h5>
+                <h5 class="fw-bold mb-0">Formulario del Paciente para Apartar Turno</h5>
                 <small class="text-muted">Información confidencial para uso exclusivo del personal de salud.</small>
               </div>
             </div>
@@ -354,7 +355,7 @@
               <!-- Symptoms Checklist -->
               <div class="mb-4">
                 <label class="form-label fw-bold small text-dark d-block mb-2">
-                  Seleccione todos los síntomas que presenta actualmente: *
+                  Seleccione los síntomas presentes actualmente: *
                 </label>
                 <div class="row g-2">
                   <div class="col-md-6">
@@ -372,7 +373,7 @@
                   <div class="col-md-6">
                     <label class="apple-check-card w-100" style="border-left: 3px solid #FF3B30;">
                       <input type="checkbox" name="sintomas" value="Vómitos continuos sin retener suero">
-                      <span class="small fw-semibold text-danger">Vómitos continuos (no retiene líquidos)</span>
+                      <span class="small fw-semibold text-danger">Vómitos continuos (no tolera líquidos)</span>
                     </label>
                   </div>
                   <div class="col-md-6">
@@ -410,7 +411,7 @@
 
               <div class="d-grid">
                 <button type="submit" class="btn btn-apple py-3 justify-content-center">
-                  <i class="fa-solid fa-paper-plane me-2"></i> Generar Ficha de Pre-Consulta y Código de Atención
+                  <i class="fa-solid fa-paper-plane me-2"></i> Apartar Turno y Obtener Código de Atención
                 </button>
               </div>
             </form>
@@ -424,7 +425,7 @@
               <i class="fa-solid fa-circle-info text-primary me-1"></i> Niveles de Triaje
             </h6>
             <p class="small text-secondary mb-3">
-              Clasificación automática para informar a la ventanilla médica y acortar la espera:
+              Clasificación médica automática para que en ventanilla le brinden prioridad si es necesario:
             </p>
             <div class="d-flex flex-column gap-2 mb-2">
               <div class="p-2 rounded" style="background: rgba(255, 59, 48, 0.08); border-left: 3px solid #FF3B30;">
@@ -449,14 +450,14 @@
     </div>
 
     <!-- =======================================================================
-         VISTA 3: DIRECTORIO MÉDICO (TODOS LOS HOSPITALES VISIBLES INMEDIATAMENTE)
+         VISTA 3: DIRECTORIO MÉDICO (PÚBLICOS, SOLOLÁ Y PRIVADOS VISIBLES)
          ======================================================================= -->
     <div id="view-directorio" class="app-view">
       <div class="view-header-apple">
         <span class="apple-tag">Guía de Centros Asistenciales</span>
         <h2 class="apple-title">Directorio Médico Escalonado de San Lucas Tolimán</h2>
         <p class="apple-subtitle">
-          Información verificada con números de teléfono directo (llamada en un clic) y ubicación exacta de centros públicos, hospital departamental de Sololá y clínicas privadas locales.
+          Información verificada con botones de llamada directa en un clic y ubicación exacta de centros públicos, hospital departamental de Sololá y clínicas privadas locales.
         </p>
       </div>
 
@@ -506,11 +507,10 @@
         <div class="p-3 mb-3 rounded" style="background: #F2F2F7; border-left: 3px solid #8E8E93;">
           <small class="text-dark">
             <strong><i class="fa-solid fa-triangle-exclamation text-warning me-1"></i> NOTA DE COSTOS PRIVADOS:</strong> 
-            Servicios privados comerciales presentados con fines informativos. Utilícelos si dispone de recursos económicos particulares suficientes para consultas, ultrasonidos o cirugías privadas.
+            Servicios comerciales privados presentados con fines informativos. Utilícelos si dispone de recursos económicos particulares suficientes para consultas, ultrasonidos o cirugías privadas.
           </small>
         </div>
 
-        <!-- Rendered Private Cards -->
         <div class="row" id="directorio-nivel-3"></div>
       </div>
     </div>
@@ -604,7 +604,7 @@
       </div>
 
       <!-- Live Global Total Card -->
-      <div class="apple-card mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <div class="apple-card mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
         <div>
           <span class="text-secondary small fw-bold text-uppercase">Total Recaudado</span>
           <h3 class="fw-bold mb-0 text-dark" id="total-recaudado-global">Q 0.00</h3>
@@ -613,6 +613,30 @@
           <span class="badge" style="background: rgba(52, 199, 89, 0.12); color: #248A3D; font-size: 0.85rem; padding: 6px 14px; border-radius: 980px;">
             <i class="fa-solid fa-shield-heart me-1"></i> Fondos destinados al suministro de insumos
           </span>
+        </div>
+      </div>
+
+      <!-- Centro de Salud Official Bank Account Badge -->
+      <div class="apple-card mb-4" style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 1px solid #86EFAC;">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+          <div class="d-flex align-items-center gap-3">
+            <div class="apple-hub-icon mb-0" style="background: #16A34A; color: #fff;">
+              <i class="fa-solid fa-building-columns"></i>
+            </div>
+            <div>
+              <span class="badge bg-success mb-1">Cuenta Bancaria Oficial del Centro de Salud</span>
+              <h6 class="fw-bold mb-0 text-dark" id="display-cuenta-banco">Banrural (Banco de Desarrollo Rural) - Monetaria Institucional</h6>
+              <div class="small text-secondary">
+                No. de Cuenta: <strong class="text-dark font-monospace" id="display-cuenta-numero">3445-001928-1</strong> | 
+                Titular: <span class="fw-semibold text-dark" id="display-cuenta-titular">Fondo Pro-Salud San Lucas Tolimán - MSPAS</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <span class="badge bg-white text-dark border p-2">
+              <i class="fa-solid fa-lock text-success me-1"></i> Transacción Bancaria Segura
+            </span>
+          </div>
         </div>
       </div>
 
@@ -675,6 +699,43 @@
                   <label class="form-label fw-bold small text-dark">Mensaje Solidario</label>
                   <input type="text" id="donante-mensaje" class="form-control form-control-apple" placeholder="Ej. Con aprecio para los niños de Tolimán">
                 </div>
+              </div>
+
+              <!-- Requisito: Conexión con App Bancaria -->
+              <div class="p-3 mb-3 rounded" style="background: #F8FAFC; border: 1px solid #CBD5E1;">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <label class="form-label fw-bold small text-dark mb-0">
+                    <i class="fa-solid fa-mobile-screen-button text-primary me-1"></i> Conexión con App Bancaria (Obligatorio) *
+                  </label>
+                  <span class="badge bg-primary-subtle text-primary small">Verificación Bancaria</span>
+                </div>
+                <p class="small text-secondary mb-2">
+                  Para registrar el aporte, es indispensable conectarse a la aplicación de su banco y autorizar la transferencia a la cuenta oficial del Centro de Salud.
+                </p>
+                <div class="row g-2 align-items-center">
+                  <div class="col-md-7">
+                    <select id="donante-banco-app" class="form-select form-control-apple fw-semibold">
+                      <option value="Banrural Móvil (Banca Virtual)">Banrural Móvil (Banca Virtual)</option>
+                      <option value="BI en Línea Móvil (Banco Industrial)">BI en Línea Móvil (Banco Industrial)</option>
+                      <option value="G&T Continental Móvil">G&T Continental Móvil</option>
+                      <option value="BAC Credomatic Banca Móvil">BAC Credomatic Banca Móvil</option>
+                      <option value="Interbanco Móvil">Interbanco Móvil</option>
+                      <option value="BAM Móvil (Banco Agromercantil)">BAM Móvil (Banco Agromercantil)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-5">
+                    <button type="button" id="btn-abrir-pasarela-banco" class="btn btn-outline-primary w-100 fw-semibold">
+                      <i class="fa-solid fa-shield-halved me-1"></i> Conectar con App Bancaria
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Estado de la autorización bancaria -->
+                <div id="banco-auth-badge" class="mt-2 p-2 rounded small d-none" style="background: #DCFCE7; border: 1px solid #86EFAC; color: #166534;">
+                  <i class="fa-solid fa-circle-check me-1"></i> <strong id="banco-auth-texto">App Bancaria Conectada</strong> 
+                  (Autorización: <span class="font-monospace fw-bold" id="banco-auth-codigo-display">-</span>)
+                </div>
+                <input type="hidden" id="donante-autorizacion-bancaria" value="">
               </div>
 
               <div class="d-grid">
@@ -773,21 +834,159 @@
     </div>
   </div>
 
-  <!-- MODAL: Panel Médico -->
-  <div class="modal fade" id="modal-panel-medico" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+  <!-- =======================================================================
+       MODAL 2A: INICIO DE SESIÓN INSTITUCIONAL PARA PERSONAL MÉDICO
+       ======================================================================= -->
+  <div class="modal fade" id="modal-login-medico" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content modal-content-apple">
         <div class="modal-header border-bottom py-3">
           <div class="d-flex align-items-center gap-2">
-            <i class="fa-solid fa-stethoscope text-primary fs-4"></i>
+            <i class="fa-solid fa-lock text-primary fs-4"></i>
             <div>
-              <h5 class="modal-title fw-bold mb-0">Panel de Recepción y Triaje Médico</h5>
-              <small class="text-secondary">Cola de pacientes en espera en San Lucas Tolimán</small>
+              <h5 class="modal-title fw-bold mb-0">Acceso a Ventanilla Médica</h5>
+              <small class="text-secondary">Uso exclusivo de hospitales y clínicas autorizadas</small>
             </div>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
+        <div class="modal-body p-4">
+          <p class="small text-secondary mb-3">
+            Para proteger la cola de pacientes y evitar manipulaciones externas, inicie sesión con su usuario institucional.
+          </p>
+
+          <!-- Quick 1-Click Test Access Buttons -->
+          <div class="mb-3 p-3 rounded" style="background: #F2F2F7;">
+            <div class="small fw-bold text-dark mb-2">
+              <i class="fa-solid fa-key text-primary me-1"></i> Accesos Rápidos Institucionales:
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+              <button type="button" class="btn btn-sm btn-outline-dark btn-quick-cred" data-u="centro_salud" data-p="mspas2026">
+                <i class="fa-solid fa-hospital-user me-1"></i> Centro de Salud MSPAS
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-dark btn-quick-cred" data-u="hospital_parroquial" data-p="parroquia2026">
+                <i class="fa-solid fa-church me-1"></i> Hospital Parroquial Schaffer
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-dark btn-quick-cred" data-u="hospital_solola" data-p="solola2026">
+                <i class="fa-solid fa-truck-medical me-1"></i> Hospital Sololá (General)
+              </button>
+            </div>
+          </div>
+
+          <form id="form-login-medico">
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark">Usuario Institucional</label>
+              <input type="text" id="login-usuario" class="form-control form-control-apple" placeholder="Ej. centro_salud o hospital_parroquial" required>
+            </div>
+            <div class="mb-4">
+              <label class="form-label small fw-bold text-dark">Contraseña</label>
+              <input type="password" id="login-password" class="form-control form-control-apple" placeholder="Ingrese su clave institucional" required>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-apple py-2 justify-content-center">
+                <i class="fa-solid fa-right-to-bracket me-2"></i> Iniciar Sesión en Ventanilla
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       MODAL 2B: PANEL DE RECEPCIÓN Y TRIAGE MÉDICO (SESIÓN ACTIVA)
+       ======================================================================= -->
+  <div class="modal fade" id="modal-panel-medico" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+      <div class="modal-content modal-content-apple">
+        <div class="modal-header border-bottom py-3 d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-stethoscope text-primary fs-4"></i>
+            <div>
+              <h5 class="modal-title fw-bold mb-0">Ventanilla de Atención y Triaje Médico</h5>
+              <div class="small text-success fw-semibold" id="doctor-session-ident">Sesión Institucional Activa</div>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-sm btn-outline-secondary" id="btn-logout-medico">
+              <i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Cerrar Sesión
+            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+        </div>
         <div class="modal-body p-4" style="background: #F9F9FB;">
+          
+          <!-- Instructions box for healthcare workers -->
+          <div class="p-3 mb-3 rounded" style="background: #EFF6FF; border: 1px solid #BFDBFE;">
+            <div class="d-flex align-items-start gap-2">
+              <i class="fa-solid fa-circle-info text-primary mt-1"></i>
+              <div class="small">
+                <strong class="text-primary d-block">Protocolo de Atención y Referencias:</strong>
+                <span class="text-secondary">
+                  Presione <strong>Atender</strong> si el caso es resuelto en este centro (se asigna el paciente a su institución). Si el caso <strong>sobrepasa la capacidad resolutiva</strong> (falta de equipo quirúrgico, UCI o medicamentos), presione <strong>No Resuelto</strong> para transferir inmediatamente al Hospital Departamental de Sololá o a una clínica privada.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MÓDULO EXCLUSIVO: Configuración de Cuenta Bancaria del Centro de Salud -->
+          <div id="seccion-cuenta-bancaria-medico" class="bg-white p-3 rounded border mb-3">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-building-columns text-success fs-4"></i>
+                <div>
+                  <h6 class="fw-bold mb-0 text-dark">Configuración de Cuenta Bancaria para Donaciones</h6>
+                  <small class="text-secondary">Configuración del número de cuenta del Centro de Salud para recibir depósitos directos.</small>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-outline-success fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-config-cuenta">
+                <i class="fa-solid fa-pen-to-square me-1"></i> Modificar Cuenta
+              </button>
+            </div>
+
+            <!-- Resumen actual de la cuenta -->
+            <div class="mt-2 p-2 rounded small bg-light border d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <div>
+                <span class="text-muted">Cuenta activa:</span> 
+                <strong id="admin-cuenta-banco-resumen" class="text-dark">Banrural</strong> — 
+                No. <span id="admin-cuenta-numero-resumen" class="font-monospace fw-bold text-success">3445-001928-1</span>
+                (<span id="admin-cuenta-titular-resumen">Fondo Pro-Salud San Lucas Tolimán - MSPAS</span>)
+              </div>
+              <span class="badge bg-success-subtle text-success">Activa para Donaciones</span>
+            </div>
+            
+            <div class="collapse mt-3 pt-3 border-top" id="collapse-config-cuenta">
+              <form id="form-config-cuenta-centro">
+                <div class="row g-2">
+                  <div class="col-md-4">
+                    <label class="form-label small fw-bold text-dark mb-1">Banco Receptor *</label>
+                    <input type="text" id="config-banco" class="form-control form-control-sm form-control-apple" placeholder="Ej. Banrural (Banco de Desarrollo Rural)" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small fw-bold text-dark mb-1">Tipo de Cuenta *</label>
+                    <select id="config-tipo-cuenta" class="form-select form-select-sm form-control-apple">
+                      <option value="Monetaria Institucional">Monetaria Institucional</option>
+                      <option value="Ahorro Institucional">Ahorro Institucional</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small fw-bold text-dark mb-1">Número de Cuenta *</label>
+                    <input type="text" id="config-numero-cuenta" class="form-control form-control-sm form-control-apple font-monospace" placeholder="Ej. 3445-001928-1" required>
+                  </div>
+                  <div class="col-md-8">
+                    <label class="form-label small fw-bold text-dark mb-1">Titular Oficial de la Cuenta *</label>
+                    <input type="text" id="config-titular" class="form-control form-control-sm form-control-apple" placeholder="Ej. Centro de Salud San Lucas Tolimán - MSPAS" required>
+                  </div>
+                  <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-sm btn-apple w-100 justify-content-center">
+                      <i class="fa-solid fa-floppy-disk me-1"></i> Guardar Cuenta
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
           <div class="row g-2 mb-3 bg-white p-3 rounded border">
             <div class="col-md-5">
               <label class="form-label small fw-bold text-dark mb-1">Destino:</label>
@@ -795,6 +994,7 @@
                 <option value="todos">Todos los Centros Médicos</option>
                 <option value="Centro de Salud">Centro de Salud San Lucas Tolimán (MSPAS)</option>
                 <option value="Hospital Parroquial">Hospital Parroquial Mons. Gregorio Schaffer</option>
+                <option value="Hospital Departamental de Sololá">Hospital Departamental de Sololá</option>
               </select>
             </div>
             <div class="col-md-4">
@@ -803,6 +1003,7 @@
                 <option value="todos">Todos los Estados</option>
                 <option value="Pendiente" selected>Solo Pacientes en Espera (Pendientes)</option>
                 <option value="Atendido">Pacientes Atendidos</option>
+                <option value="Referido">Casos Referidos / Transferidos</option>
               </select>
             </div>
             <div class="col-md-3 d-flex align-items-end">
@@ -820,9 +1021,9 @@
                   <th>Paciente</th>
                   <th>Triaje</th>
                   <th>Síntomas</th>
-                  <th>Destino</th>
+                  <th>Destino Asignado</th>
                   <th>Estado</th>
-                  <th>Acción</th>
+                  <th>Acción Médica</th>
                 </tr>
               </thead>
               <tbody id="doctor-fichas-tbody" class="small">
@@ -834,19 +1035,125 @@
           </div>
         </div>
         <div class="modal-footer border-top py-2">
-          <button type="button" class="btn btn-sm btn-apple-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-sm btn-apple-secondary" data-bs-dismiss="modal">Cerrar Ventanilla</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: Recibo de Donación -->
+  <!-- =======================================================================
+       MODAL 2C: CASO NO RESUELTO / REFERENCIA A OTRO HOSPITAL
+       ======================================================================= -->
+  <div class="modal fade" id="modal-referir-paciente" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-apple">
+        <div class="modal-header border-bottom py-3">
+          <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-share-nodes text-danger fs-4"></i>
+            <div>
+              <h5 class="modal-title fw-bold mb-0">Caso No Resuelto / Transferencia Médica</h5>
+              <small class="text-secondary">Referencia formal a nivel hospitalario superior o privado</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="p-3 mb-3 rounded" style="background: #FFF2F2; border-left: 3px solid #FF3B30;">
+            <strong class="text-danger d-block small" id="referencia-paciente-nombre">Paciente: -</strong>
+            <small class="text-secondary d-block mt-1"><strong>Síntomas:</strong> <span id="referencia-sintomas-actuales">-</span></small>
+          </div>
+
+          <form id="form-referir-paciente">
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark">Hospital o Clínica de Destino (Transferir a): *</label>
+              <select id="referencia-nuevo-destino" class="form-select form-control-apple fw-semibold" required>
+                <optgroup label="Hospital General de Referencia (Público Gratuito)">
+                  <option value="Hospital Departamental de Sololá" selected>Hospital Departamental de Sololá (Cirugía Mayor, UCI y Trauma)</option>
+                </optgroup>
+                <optgroup label="Hospitales y Clínicas Privadas (San Lucas Tolimán)">
+                  <option value="Centro Clínico de Especialidades Vida">Centro Clínico Vida (Ultrasonido y Hospitalización Rápida)</option>
+                  <option value="Centro Médico Sagrado Corazón / Dr. César Rodas">Centro Sagrado Corazón (Cirugía Laparoscópica y Gastro)</option>
+                  <option value="Clínica Médica Genesaret">Clínica Médica Genesaret (Consulta Externa Diurna)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark">Motivo Clínico de No Resolución / Traslado: *</label>
+              <textarea id="referencia-motivo" class="form-control form-control-apple" rows="3" placeholder="Ej. Paciente con sospecha de abdomen agudo quirúrgico. Requiere evaluación por cirujano general, quirófano o insumos no disponibles a nivel primario." required></textarea>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-apple py-2 justify-content-center" style="background: #D32F2F;">
+                <i class="fa-solid fa-file-medical me-2"></i> Confirmar Transferencia y Emitir Boleta
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       MODAL 2D: PASARELA DE CONEXIÓN CON APP BANCARIA
+       ======================================================================= -->
+  <div class="modal fade" id="modal-pasarela-bancaria" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-apple">
+        <div class="modal-header border-bottom py-3" id="modal-banco-header" style="background: #0F172A; color: white;">
+          <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-success fs-4"></i>
+            <div>
+              <h5 class="modal-title fw-bold mb-0 text-white" id="modal-banco-titulo">Conexión con App Bancaria</h5>
+              <small class="text-white-50">Pasarela Segura de Transferencia Electrónica</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="p-3 mb-3 rounded" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-left: 4px solid #10B981;">
+            <div class="d-flex justify-content-between mb-1">
+              <small class="text-secondary">Destino Beneficiario:</small>
+              <strong class="text-dark small" id="banco-modal-destino">Centro de Salud San Lucas Tolimán (MSPAS)</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <small class="text-secondary">Cuenta Oficial Receptora:</small>
+              <span class="font-monospace fw-bold text-dark small" id="banco-modal-cuenta">3445-001928-1</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <small class="text-secondary">Monto a Transferir:</small>
+              <strong class="text-success fs-5" id="banco-modal-monto">Q 0.00</strong>
+            </div>
+          </div>
+
+          <form id="form-pasarela-bancaria">
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark mb-1">Usuario / No. de Cuenta o Cliente Bancario *</label>
+              <input type="text" id="pasarela-usuario-banco" class="form-control form-control-apple" placeholder="Ej. 10293847 / juan.perez" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark mb-1">Token Móvil / PIN de Seguridad de su Banco *</label>
+              <input type="password" id="pasarela-token-banco" class="form-control form-control-apple font-monospace" placeholder="Código de 6 dígitos del token" required>
+              <div class="form-text small">Conexión con la aplicación bancaria para validar la transacción y emitir la autorización de transferencia.</div>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-apple py-2 justify-content-center" id="btn-autorizar-transferencia">
+                <i class="fa-solid fa-lock me-2"></i> Autorizar y Transferir Aporte
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Recibo de Donación -->
   <div class="modal fade" id="modal-recibo-donacion" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content modal-content-apple">
         <div class="modal-header border-bottom py-3">
           <h5 class="modal-title fw-bold">
-            <i class="fa-solid fa-award text-teal me-2"></i> Constancia de Aporte Solidario
+            <i class="fa-solid fa-award text-teal me-2"></i> Constancia Oficial de Aporte Solidario
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
@@ -857,7 +1164,7 @@
             <div class="small text-muted" id="recibo-fecha">-</div>
           </div>
 
-          <p class="text-secondary small mb-1">La Comunidad de San Lucas Tolimán agradece a:</p>
+          <p class="text-secondary small mb-1">La Comunidad y el Centro de Salud agradecen a:</p>
           <h4 class="fw-bold text-dark mb-1" id="recibo-donante">Nombre del Donante</h4>
           <span class="badge bg-light text-secondary border mb-3" id="recibo-tipo">Tipo</span>
 
@@ -866,8 +1173,16 @@
               <small class="text-muted">Causa Patrocinada:</small>
               <strong class="text-dark small" id="recibo-meta">-</strong>
             </div>
-            <div class="d-flex justify-content-between">
-              <small class="text-muted">Monto Donado:</small>
+            <div class="d-flex justify-content-between mb-1">
+              <small class="text-muted">Banco y Autorización:</small>
+              <strong class="text-dark small font-monospace" id="recibo-banco-auth">-</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <small class="text-muted">Cuenta Acreditada:</small>
+              <strong class="text-dark small font-monospace" id="recibo-cuenta-destino">-</strong>
+            </div>
+            <div class="d-flex justify-content-between mt-2 pt-2 border-top">
+              <small class="text-muted fw-bold">Monto Total Donado:</small>
               <strong class="text-teal fs-5" id="recibo-monto">Q 0.00</strong>
             </div>
           </div>
